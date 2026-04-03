@@ -5,11 +5,11 @@ from typing import Dict, Any
 
 class HarvestSession(BaseModel):
 
-    userId: str
+    userId: str | None = None
 
+    twoInOneTotalPieces: int
     threeInOneTotalPieces: int
     fourInOneTotalPieces: int
-    fiveInOneTotalPieces: int
     sardinesTotalPieces: int
 
     totalPiecesOfHarvest: int
