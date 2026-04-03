@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-*.json
-=======
 # Ignore node_modules folder
 node_modules/
 
@@ -18,4 +15,3 @@ totepai-edd0f-firebase-adminsdk-fbsvc-925bdc3e10.json
 # Ignore IDE settings
 .vscode/
 .idea/
->>>>>>> 90d1834 (Initial commit)
