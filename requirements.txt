@@ -3,3 +3,4 @@ uvicorn
 python-dotenv
 firebase-admin
 requests
+python-multipart
