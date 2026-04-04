@@ -1,7 +1,7 @@
 import firebase_admin
 from firebase_admin import credentials, auth
 
-cred = credentials.Certificate("totepai-edd0f-firebase-adminsdk-fbsvc-925bdc3e10.json")
+cred = credentials.Certificate("totepai-edd0f-firebase-adminsdk-fbsvc-6d69400949.json")
 
 firebase_admin.initialize_app(cred)
 
@@ -16,4 +16,4 @@ class FirebaseAuthService:
             return decoded_token
 
         except Exception:
-            return None
+            return None 

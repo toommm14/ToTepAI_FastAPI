@@ -1,5 +1,12 @@
 from fastapi import FastAPI
 
+try:
+    from dotenv import load_dotenv
+
+    load_dotenv()
+except Exception:
+    pass
+
 from routers.harvest_router import router as harvest_router
 from routers.harvest_session_router import router as harvest_session_router
 

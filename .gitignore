@@ -1,3 +1,5 @@
+*.json
+
 # Ignore node_modules folder
 node_modules/
 
@@ -10,8 +12,13 @@ Thumbs.db
 
 # Ignore environment variables
 .env
-totepai-edd0f-firebase-adminsdk-fbsvc-925bdc3e10.json
+totepai-edd0f-firebase-adminsdk-fbsvc-ed3ff085c2.json
+totepai_venv/
 
 # Ignore IDE settings
 .vscode/
 .idea/
+
+__pycache__/
+*.pyc
+venv/
