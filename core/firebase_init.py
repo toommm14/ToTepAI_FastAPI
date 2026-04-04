@@ -1,8 +1,8 @@
-import firebase_admin
-from firebase_admin import credentials, firestore
+import os
+import json
+from firebase_admin import credentials, initialize_app
 
-cred = credentials.Certificate("totepai-edd0f-firebase-adminsdk-fbsvc-6d69400949.json")
+firebase_creds = json.loads(os.getenv("FIREBASE_CREDENTIALS"))
 
-firebase_admin.initialize_app(cred)
-
-db = firestore.client()
+cred = credentials.Certificate(firebase_creds)
+initialize_app(cred)
