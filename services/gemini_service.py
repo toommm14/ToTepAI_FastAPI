@@ -59,7 +59,7 @@ class GeminiService:
                 f"{ollama_url}/api/generate",
                 json=payload,
                 headers=headers,
-                timeout=10
+                timeout=60
             )
             elapsed = time.time() - start_time
             if elapsed > 8:
