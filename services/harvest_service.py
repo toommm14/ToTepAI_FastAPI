@@ -77,12 +77,15 @@ class HarvestService:
                     }
                     harvest_record["geminiForecastedData"] = forecast_data
                 except (json.JSONDecodeError, KeyError):
+                    harvest_record["geminiForecastRemarks"] = raw_text
+                    harvest_record["weatherAdvisory"] = raw_text
+                    
                     forecast_copy = {
                         k: v for k, v in forecast.items()
                         if k != "weatherAdvisory"
                     }
 
-                   harvest_record["geminiForecastedData"] = forecast_copy
+                    harvest_record["geminiForecastedData"] = forecast_copy
             else:
                 harvest_record["geminiForecastRemarks"] = forecast.get("forecastRemark")
                 harvest_record["weatherAdvisory"] = forecast.get("weatherAdvisory")
