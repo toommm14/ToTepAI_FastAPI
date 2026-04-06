@@ -26,6 +26,7 @@ class GeminiService:
             "Respond in JSON format:\n\n"
             "{\n"
             ' "forecastRemark": "...",\n'
+            ' "weatherAdvisory": "...",\n'
             ' "predictedHarvestData": "Forecasted Harvest Data:\\n'
             '2-1 pieces: \\n'
             '3-1 pieces: \\n'
