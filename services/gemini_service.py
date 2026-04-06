@@ -35,7 +35,7 @@ class GeminiService:
             'Total Pieces: \\n'
             'Total Weight: \\n'
             '",\n'
-            ' "MAPE": (in percentage)\n'
+            ' "MAPE": (in percentage)%\n'
             "}\n"
         )
 
