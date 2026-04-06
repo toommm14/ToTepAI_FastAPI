@@ -71,12 +71,18 @@ class HarvestService:
                     harvest_record["geminiForecastRemarks"] = parsed_forecast.get("forecastRemark")
                     harvest_record["weatherAdvisory"] = parsed_forecast.get("weatherAdvisory")
                     # Remove forecastRemark from the data to avoid duplication
-                    forecast_data = {k: v for k, v in parsed_forecast.items() if k != "forecastRemark"}
+                    forecast_data = {
+                        k: v for k, v in parsed_forecast.items()
+                        if k not in ["forecastRemark", "weatherAdvisory"]
+                    }
                     harvest_record["geminiForecastedData"] = forecast_data
                 except (json.JSONDecodeError, KeyError):
-                    harvest_record["geminiForecastRemarks"] = raw_text
-                    harvest_record["weatherAdvisory"] = raw_text
-                    harvest_record["geminiForecastedData"] = forecast
+                    forecast_copy = {
+                        k: v for k, v in forecast.items()
+                        if k != "weatherAdvisory"
+                   }
+
+                   harvest_record["geminiForecastedData"] = forecast_copy
             else:
                 harvest_record["geminiForecastRemarks"] = forecast.get("forecastRemark")
                 harvest_record["weatherAdvisory"] = forecast.get("weatherAdvisory")
