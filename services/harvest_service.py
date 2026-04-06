@@ -80,7 +80,7 @@ class HarvestService:
                     forecast_copy = {
                         k: v for k, v in forecast.items()
                         if k != "weatherAdvisory"
-                   }
+                    }
 
                    harvest_record["geminiForecastedData"] = forecast_copy
             else:
