@@ -11,9 +11,9 @@ class GeminiService:
     def generate_forecast(harvest_data):
 
         prompt = (
-            "You are an aquaculture AI assistant.\n\n"
+            "You are an aquaculture expert aquaculture AI assistant.\n\n"
             "Analyze the following bangus harvest data\n"
-            "then generate a short forecast about the next harvest cycle.\n\n"
+            "then generate a comprehensive forecast about the next harvest cycle.\n\n"
             "Harvest Data:\n"
             "2-1 pieces: " + str(harvest_data['twoInOneTotalPieces']) + "\n"
             "3-1 pieces: " + str(harvest_data['threeInOneTotalPieces']) + "\n"
@@ -21,8 +21,8 @@ class GeminiService:
             "Sardines: " + str(harvest_data['sardinesTotalPieces']) + "\n"
             "Total Pieces: " + str(harvest_data['totalPiecesOfHarvest']) + "\n"
             "Total Weight: " + str(harvest_data['totalWeightOfHarvest']) + "\n\n"
-            "Provide a short harvest prediction and recommendation.\n"
-            "Also provide a weather advisory based on upcoming months weather conditions in the Philippines Surigao Del Sur to help farmers prepare for the next harvest cycle.\n"
+            "Provide a comprehensive harvest prediction and recommendation.\n"
+            "Also provide a weather advisory based on upcoming months weather conditions in the Philippines Surigao Del Sur to help farmers prepare for the next harvest cycle. Also add some tips to help aquaculture farmers prevent loss based on the upcoming weather conditions.\n"
             "Respond in JSON format:\n\n"
             "{\n"
             ' "forecastRemark": "...",\n'
@@ -35,7 +35,7 @@ class GeminiService:
             'Total Pieces: \\n'
             'Total Weight: \\n'
             '",\n'
-            ' "confidence": 0.0\n'
+            ' "MAPE": (in percentage)\n'
             "}\n"
         )
 
