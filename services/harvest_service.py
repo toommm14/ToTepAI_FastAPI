@@ -48,7 +48,7 @@ class HarvestService:
             "sardinesTotalPieces": data.sardinesTotalPieces,
 
             "totalPiecesOfHarvest": data.totalPiecesOfHarvest,
-            "totalWeightOfHarvest": data.totalWeightOfHarvest * 1000,
+            "totalWeightOfHarvest": data.totalWeightOfHarvest / 1000,
 
             "timestamp": data.timestamp,
         }
