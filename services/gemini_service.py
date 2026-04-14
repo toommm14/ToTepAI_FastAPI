@@ -3,31 +3,63 @@ import os
 import json
 import time
 import logging
+from core.firebase_init import db
+from google.cloud.firestore import FieldFilter
 
 
 class GeminiService:
 
     @staticmethod
-    def generate_forecast(harvest_data):
+    def get_historical_harvest_data(user_id):
+        harvest_data_ref = db.collection('users').document(user_id).collection('harvest_data').order_by('timestamp', direction='DESCENDING').limit(5)
+        harvest_data_docs = harvest_data_ref.stream()
+        historical_harvest_data = []
+        for doc in harvest_data_docs:
+            historical_harvest_data.append(doc.to_dict())
+        return historical_harvest_data
+
+    @staticmethod
+    def generate_forecast(harvest_data, user_id):
+
+        historical_harvest_data = GeminiService.get_historical_harvest_data(user_id)
 
         prompt = (
-            "You are an aquaculture expert aquaculture AI assistant.\n\n"
-            "Analyze the following bangus harvest data\n"
+            "You are an expert data scientist specializing in aquaculture time-series forecasting and aquaculture yield analysis.\n\n"
+            "Analyze the following bangus harvest data along with historical trends\n"
             "then generate a comprehensive forecast about the next harvest cycle.\n\n"
-            "Harvest Data:\n"
+            "Current Harvest Data:\n"
             "2-1 pieces: " + str(harvest_data['twoInOneTotalPieces']) + "\n"
             "3-1 pieces: " + str(harvest_data['threeInOneTotalPieces']) + "\n"
             "4-1 pieces: " + str(harvest_data['fourInOneTotalPieces']) + "\n"
             "Sardines: " + str(harvest_data['sardinesTotalPieces']) + "\n"
             "Total Pieces: " + str(harvest_data['totalPiecesOfHarvest']) + "\n"
             "Total Weight: " + str(harvest_data['totalWeightOfHarvest']) + "\n\n"
-            "Provide a comprehensive harvest prediction and recommendation.\n"
-            "Also provide a weather advisory based on upcoming months weather conditions in the Philippines Surigao Del Sur to help farmers prepare for the next harvest cycle. Also add some tips to help aquaculture farmers prevent loss based on the upcoming weather conditions.\n"
+            "Historical Harvest Data (last 5 harvests):\n"
+        )
+        
+        # Add historical data to prompt
+        for i, hist_data in enumerate(historical_harvest_data, 1):
+            prompt += (
+                f"Harvest {i}:\n"
+                f"2-1 pieces: {hist_data.get('twoInOneTotalPieces', 'N/A')}\n"
+                f"3-1 pieces: {hist_data.get('threeInOneTotalPieces', 'N/A')}\n"
+                f"4-1 pieces: {hist_data.get('fourInOneTotalPieces', 'N/A')}\n"
+                f"Sardines: {hist_data.get('sardinesTotalPieces', 'N/A')}\n"
+                f"Total Pieces: {hist_data.get('totalPiecesOfHarvest', 'N/A')}\n"
+                f"Total Weight: {hist_data.get('totalWeightOfHarvest', 'N/A')}\n\n"
+            )
+        
+        prompt += (
+            "Analyze the historical and current harvest data patterns and select the most appropriate forecasting model (e.g., SARIMA, Holt-Winters, Prophet, Exponential Smoothing, Linear Regression, Seasonal Decomposition) based on the data characteristics.\n\n"
+            "Provide a comprehensive harvest prediction and recommendation for the NEXT QUARTER (3 months ahead).\n"
+            "Also provide a weather advisory based on upcoming months weather conditions in Philippines Surigao Del Sur to help farmers prepare for the next harvest cycle. Also add some tips to help aquaculture farmers prevent loss based on the upcoming weather conditions.\n"
             "Respond in JSON format:\n\n"
             "{\n"
+            ' "forecastingModel": "Selected forecasting model name",\n'
+            ' "modelRationale": "Why this model was chosen",\n'
             ' "forecastRemark": "...",\n'
             ' "weatherAdvisory": "...",\n'
-            ' "predictedHarvestData": "Forecasted Harvest Data:\\n'
+            ' "predictedHarvestData": "Forecasted Harvest Data for NEXT QUARTER (3 months ahead):\\n'
             '2-1 pieces: \\n'
             '3-1 pieces: \\n'
             '4-1 pieces: \\n'
@@ -35,7 +67,9 @@ class GeminiService:
             'Total Pieces: \\n'
             'Total Weight: \\n'
             '",\n'
-            ' "MAPE": (in percentage)%\n'
+            ' "MAPE": (in percentage)%,\n'
+            ' "quarterlyTrend": "upward/downward/stable",\n'
+            ' "confidence": 0.0\n'
             "}\n"
         )
 
