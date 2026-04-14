@@ -19,7 +19,20 @@ class GeminiService:
         return historical_harvest_data
 
     @staticmethod
-    def generate_forecast(harvest_data, user_id):
+    def get_active_user_id():
+        active_users = list(db.collection("users").where(filter=FieldFilter("status", "==", 1)).limit(2).stream())
+        if len(active_users) == 1:
+            return active_users[0].id
+        if len(active_users) > 1:
+            return active_users[0].id
+        return None
+
+    @staticmethod
+    def generate_forecast(harvest_data):
+
+        user_id = GeminiService.get_active_user_id()
+        if not user_id:
+            return {"rawText": "No active harvest session found. Please start harvest session first."}
 
         historical_harvest_data = GeminiService.get_historical_harvest_data(user_id)
 
