@@ -46,7 +46,7 @@ class GeminiService:
             "4-1 pieces: " + str(harvest_data['fourInOneTotalPieces']) + "\n"
             "Sardines: " + str(harvest_data['sardinesTotalPieces']) + "\n"
             "Total Pieces: " + str(harvest_data['totalPiecesOfHarvest']) + "\n"
-            "Total Weight: " + str(harvest_data['totalWeightOfHarvest']) + "\n\n"
+            "Total Weight: " + str(harvest_data['totalWeightOfHarvest']) + " " + str(harvest_data.get('weightUnit', 'kg')) + "\n\n"
             "Historical Harvest Data (last 5 harvests):\n"
         )
         
@@ -59,7 +59,7 @@ class GeminiService:
                 f"4-1 pieces: {hist_data.get('fourInOneTotalPieces', 'N/A')}\n"
                 f"Sardines: {hist_data.get('sardinesTotalPieces', 'N/A')}\n"
                 f"Total Pieces: {hist_data.get('totalPiecesOfHarvest', 'N/A')}\n"
-                f"Total Weight: {hist_data.get('totalWeightOfHarvest', 'N/A')}\n\n"
+                f"Total Weight: {hist_data.get('totalWeightOfHarvest', 'N/A')} {hist_data.get('weightUnit', 'kg')}\n\n"
             )
         
         prompt += (
