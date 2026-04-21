@@ -34,6 +34,14 @@ class HarvestService:
     def store_session(data):
 
         owner_user_id = HarvestService._resolve_owner_user_id(data.userId)
+        
+        # Weight handling
+        if data.totalWeightOfHarvest < 1000:
+            total_weight = data.totalWeightOfHarvest
+            weight_unit = "g"
+        else:
+            total_weight = data.totalWeightOfHarvest / 1000
+            weight_unit = "kg"
 
         harvest_record = {
 
@@ -48,7 +56,8 @@ class HarvestService:
             "sardinesTotalPieces": data.sardinesTotalPieces,
 
             "totalPiecesOfHarvest": data.totalPiecesOfHarvest,
-            "totalWeightOfHarvest": data.totalWeightOfHarvest / 1000,
+            "totalWeightOfHarvest": total_weight,
+            "weightUnit": weight_unit,
 
             "timestamp": data.timestamp,
         }
