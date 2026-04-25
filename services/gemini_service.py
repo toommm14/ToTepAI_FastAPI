@@ -64,15 +64,14 @@ class GeminiService:
         
         prompt += (
             "Analyze the historical and current harvest data patterns and select the most appropriate forecasting model (e.g., SARIMA, Holt-Winters, Prophet, Exponential Smoothing, Linear Regression, Seasonal Decomposition) based on the data characteristics.\n\n"
-            "Provide a comprehensive harvest prediction and recommendation for the NEXT QUARTER (3 months ahead).\n"
-            "Also provide a weather advisory based on upcoming months weather conditions in Philippines Surigao Del Sur to help farmers prepare for the next harvest cycle. Also add some tips to help aquaculture farmers prevent loss based on the upcoming weather conditions.\n"
+            "Provide a comprehensive harvest prediction and recommendation for the harvest.\n"
+           
             "Respond in JSON format:\n\n"
             "{\n"
             ' "forecastingModel": "Selected forecasting model name",\n'
             ' "modelRationale": "Why this model was chosen",\n'
             ' "forecastRemark": "...",\n'
-            ' "weatherAdvisory": "...",\n'
-            ' "predictedHarvestData": "Forecasted Harvest Data for NEXT QUARTER (3 months ahead):\\n'
+            ' "predictedHarvestData": "Forecasted Harvest Data for next harvest:\\n'
             '2-1 pieces: \\n'
             '3-1 pieces: \\n'
             '4-1 pieces: \\n'
@@ -81,8 +80,6 @@ class GeminiService:
             'Total Weight: \\n'
             '",\n'
             ' "MAPE": (in percentage)%,\n'
-            ' "quarterlyTrend": "upward/downward/stable",\n'
-            ' "confidence": 0.0\n'
             "}\n"
         )
 
