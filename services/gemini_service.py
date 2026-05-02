@@ -84,7 +84,7 @@ class GeminiService:
         )
 
         ollama_url = os.getenv("OLLAMA_URL", "https://ollama.com")
-        model = os.getenv("OLLAMA_MODEL", "gemini-3-flash-preview:cloud")
+        model = os.getenv("OLLAMA_MODEL", "qwen3.5:397b-cloud")
 
         api_key = os.getenv("OLLAMA_API_KEY", "")
         headers = {}
